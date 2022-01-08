@@ -3,10 +3,17 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-// Basic Configuration
+// Basic Configuration.
 const port = process.env.PORT || 3000;
+const mongoose = require("mongoose");
+mongoose.connect(process.env.MONGO_URL).then(
+  () => console.log("Connected to MongoDB"),
+  () => {
+    console.error("Could not connect to MongoDB");
+  }
+);
 
-// Middleware
+// Middleware.
 app.use(cors());
 
 // Static file path.
