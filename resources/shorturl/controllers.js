@@ -29,14 +29,18 @@ function createNewURL(req, res) {
 }
 
 function getShortenedURL(req, res, error) {
-  const requestedID = req.params.url;
-  ShortenedURL.findOne({ shortened_id: requestedID }, (error, data) => {
-    if (data.url) {
-      res.redirect(data.url);
-    } else {
-      res.json({ error: "Could not find URL in database" });
-    }
-  });
+  if (!req.params.url) {
+    console.log("Invalid URL");
+  } else {
+    const requestedID = req.params.url;
+    ShortenedURL.findOne({ shortened_id: requestedID }, (error, data) => {
+      if (data) {
+        res.redirect(data.url);
+      } else {
+        res.json({ error: "Could not find URL in database" });
+      }
+    });
+  }
 }
 
 module.exports = {
