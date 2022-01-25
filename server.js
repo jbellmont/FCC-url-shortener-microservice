@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const controllers = require("./resources/shorturl/controllers");
 
@@ -18,6 +19,7 @@ mongoose.connect(process.env.MONGO_URL).then(
 // Middleware.
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Static file path.
 app.use("/public", express.static(`${process.cwd()}/public`));
