@@ -11,7 +11,6 @@ function createNewURL(req, res) {
     parsedLookupURL.protocol ? parsedLookupURL.host : parsedLookupURL.path,
     (error, address) => {
       if (error || !address) {
-        console.error(error);
         res.json({ error: "invalid url" });
       } else {
         // Returns a number between 1 - 9999.
@@ -29,6 +28,18 @@ function createNewURL(req, res) {
   );
 }
 
+function getShortenedURL(req, res, error) {
+  const requestedID = req.params.url;
+  ShortenedURL.findOne({ shortened_id: requestedID }, (error, data) => {
+    if (data.url) {
+      res.redirect(data.url);
+    } else {
+      res.json({ error: "Could not find URL in database" });
+    }
+  });
+}
+
 module.exports = {
   createNewURL,
+  getShortenedURL,
 };

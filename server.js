@@ -26,20 +26,10 @@ app.get("/", function (req, res) {
 });
 
 // API endpoints.
-// TODO:
-// Handler for GET requests.
-app.get("/api/shorturl", () => {});
-
-// TODO:
-// Reject URLs that have already been added.
-// Respond with the existing shortened URL if so.
+app.get("/api/shorturl/:url", controllers.getShortenedURL);
 app.post("/api/shorturl", controllers.createNewURL);
 
 // Port to listen to requests.
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
-
-// Requirements.
-// When you visit /api/shorturl/<short_url>, you will be redirected to the
-// original URL.
